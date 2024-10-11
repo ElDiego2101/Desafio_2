@@ -11,6 +11,8 @@ private:
     bool estado_surtidor;
 public:
     Surtidor(string _ID_sr, string _Model_mq, bool _estado_surtidor);
+    string getNombre();
+
 };
 
 #endif // SURTIDOR_H

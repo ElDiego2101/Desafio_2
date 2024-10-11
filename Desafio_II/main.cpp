@@ -6,6 +6,7 @@ using namespace std;
 int main() {
     char opcion;
     bool ban = true;
+    Red TerMex;
     cout << "**Bienvenido a la red de combustible 'TerMax'.**" << endl << endl;
     while (ban) {
         cout << endl << "*Ingrese la opcion deseada.*" << endl
@@ -25,9 +26,9 @@ int main() {
         cin.ignore();
 
         if (opcion == '1') {
-
+            TerMex.AgregarEstacion();
         } else if(opcion == '2') {
-
+            TerMex.consulta();
         } else if (opcion == '3') {
 
         } else if (opcion == '4') {

@@ -11,11 +11,16 @@ private:
     Surtidor*** arreglo_surtidores;
     Venta** arreglo_ventas;
     int* contador_surtidores;
-    int contador;
+    int pos_est;
     int capacidad;
+    int capacidad_est;
 
 public:
     Red();
+    ~Red();
+    void AgregarEstacion();
+    void consulta();
+
 };
 
 #endif // RED_H

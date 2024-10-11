@@ -14,6 +14,7 @@ private:
     int tanque;
 public:
     Estacion(string _nombre, string _ID_est, string _gerente, string _region, string _P_Geo, int _tanque);
+    string getNombre();
 
 };
 
