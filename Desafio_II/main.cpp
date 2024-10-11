@@ -27,8 +27,8 @@ int main() {
 
         if (opcion == '1') {
             TerMex.AgregarEstacion();
-        } else if(opcion == '2') {
-            TerMex.consulta();
+        } else if (opcion == '2') {
+            TerMex.EliminarEstacion();
         } else if (opcion == '3') {
 
         } else if (opcion == '4') {
@@ -48,9 +48,7 @@ int main() {
         } else if (opcion == 'n' || opcion == 'N') {
             ban = false;
         } else if (opcion == 'a') {
-
-        } else if (opcion == 'd') {
-
+            TerMex.consulta();
         }
     }
 

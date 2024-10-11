@@ -68,6 +68,45 @@ void Red::AgregarEstacion()
     capacidad++;
 
 }
+
+void Red::EliminarEstacion()
+{
+    string est_elim;
+    int pos_est_elim = -1;
+    cout << "Estaciones disponibles: " << endl;
+    for(int i = 0; i < capacidad_est;i++){
+        cout << endl << "-" << arreglo_estacion[i]->getNombre();
+    }
+    cout << endl << endl << "Ingrese la estacion a eliminar: ";
+    cin >> est_elim;
+    for(int i = 0; i < capacidad_est;i++){
+        if(est_elim==arreglo_estacion[i]->getNombre()){
+            pos_est_elim=i;
+        }
+    }
+    if(pos_est_elim<0){
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
+        return;
+    }
+    Estacion** nuevo_arreglo_estaciones = new Estacion*[capacidad_est-1];
+    for(int i=0;i<capacidad_est;i++){
+        if(i<pos_est_elim){
+            nuevo_arreglo_estaciones[i] = arreglo_estacion[i];
+        }
+        else if(i>pos_est_elim){
+            nuevo_arreglo_estaciones[i-1] = arreglo_estacion[i];
+        }
+
+    }
+    delete[] arreglo_estacion;
+
+    arreglo_estacion = nuevo_arreglo_estaciones;
+    capacidad_est--;
+    pos_est--;
+
+
+}
+
 void Red :: consulta()
 {
     for(int i = 0; i < capacidad_est;i++){

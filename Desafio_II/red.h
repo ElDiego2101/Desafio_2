@@ -19,6 +19,7 @@ public:
     Red();
     ~Red();
     void AgregarEstacion();
+    void EliminarEstacion();
     void consulta();
 
 };
