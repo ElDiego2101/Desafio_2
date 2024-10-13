@@ -21,6 +21,10 @@ public:
     void AgregarEstacion();
     void EliminarEstacion();
     void consulta();
+    void AgregarSurtidor();
+    //vamos hacer que si mandamos 1 activamos y si mandamos cero desactivemos
+    void EstadoSurtidor();
+
 
 };
 

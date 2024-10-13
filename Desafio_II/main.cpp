@@ -1,5 +1,6 @@
 #include <iostream>
 #include "red.h"
+#include "complementario.h"
 using namespace std;
 
 
@@ -7,6 +8,8 @@ int main() {
     char opcion;
     bool ban = true;
     Red TerMex;
+    string hora=horaReal();
+    cout<<hora<<endl;
     cout << "**Bienvenido a la red de combustible 'TerMax'.**" << endl << endl;
     while (ban) {
         cout << endl << "*Ingrese la opcion deseada.*" << endl
@@ -21,35 +24,52 @@ int main() {
              << "9. Cantidad de litros vendidos para cada categoria de combustible." << endl
              << "M. Simulacion de una venta de combustible." << endl
              << "N. Salir." << endl << endl
+
              << "Opcion: ";
         cin >> opcion;
         cin.ignore();
 
-        if (opcion == '1') {
-            TerMex.AgregarEstacion();
-        } else if (opcion == '2') {
+        switch(opcion){
+        case '1':
+          limpiarConsola();
+          TerMex.AgregarEstacion();
+            break;
+        case '2':
+            limpiarConsola();
             TerMex.EliminarEstacion();
-        } else if (opcion == '3') {
+            break;
+        case '3':
+            break;
+        case '4':
+            limpiarConsola();
+            TerMex.AgregarSurtidor();
+            break;
+        case '5':
+            break;
+        case '6':
+            break;
+        case '7':
+            limpiarConsola();
+            TerMex.EstadoSurtidor();
+            break;
+        case '8':
+            break;
+        case '9':
+            break;
+        case 'M':
+            break;
+        case 'N':
+            break;
+        case 'J':
+            limpiarConsola();
+           TerMex.consulta();
+            break;
+        default:
+            cout<<"elija una opcion valida"<<endl;
 
-        } else if (opcion == '4') {
 
-        } else if (opcion == '5') {
-
-        } else if (opcion == '6') {
-
-        } else if (opcion == '7') {
-
-        } else if (opcion == '8') {
-
-        } else if (opcion == '9') {
-
-        } else if (opcion == 'm' || opcion == 'M') {
-
-        } else if (opcion == 'n' || opcion == 'N') {
-            ban = false;
-        } else if (opcion == 'a') {
-            TerMex.consulta();
         }
+
     }
 
     return 0;
