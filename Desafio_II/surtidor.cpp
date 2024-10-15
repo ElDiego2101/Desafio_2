@@ -29,3 +29,18 @@ void Surtidor::AgregarVenta(Venta* nuevaVenta) {
     ventas = nuevoArreglo;
     num_ventas++;
 }
+
+
+void Surtidor::MostrarVentas()const{
+    for (int i = 0; i < num_ventas; ++i) {
+        cout << "id venta: " << ventas[i]->getID() << endl;
+        cout << "documento: " << ventas[i]->getDoc_cliente() << endl;
+        cout << "Litros vendidos: " << ventas[i]->getL_vendidos() << endl;
+        cout << "dinero ingresado: " << ventas[i]->getDinero() << endl;
+        cout << "metodo: " << ventas[i]->getMetodo_pago() << endl;
+        cout << "fecha: " << ventas[i]->getFecha() << endl;
+        cout << "hora: " << ventas[i]->getHora() << endl;
+        // Agrega más detalles según lo que necesites mostrar
+        cout << endl;
+    }
+}

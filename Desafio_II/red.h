@@ -33,6 +33,7 @@ public:
     //vamos hacer que si mandamos 1 activamos y si mandamos cero desactivemos
     void EstadoSurtidor();
     void SimulacionVenta();
+    void ConsultarTransacciones();
 
 
 };

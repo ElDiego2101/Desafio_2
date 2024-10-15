@@ -60,7 +60,7 @@ void Red::SimulacionVenta(){
     }
 
     if (pos_est < 0) {
-        cout << endl << "*La estación ingresada no existe.*" << endl;
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
         return;
     }
     string hora=horaReal();
@@ -256,7 +256,7 @@ void Red::AgregarSurtidor() {
         cout << endl << arreglo_estacion[i]->getNombre() << endl;
     }
 
-    cout << "Ingrese el nombre de la estación a la que quiere agregar un surtidor: " << endl;
+    cout << "Ingrese el nombre de la estacion a la que quiere agregar un surtidor: " << endl;
     cin >> estSurtidor;
 
 
@@ -269,7 +269,7 @@ void Red::AgregarSurtidor() {
     }
 
     if (pos_est < 0) {
-        cout << endl << "*La estación ingresada no existe.*" << endl;
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
         return;
     }
 
@@ -313,7 +313,7 @@ void Red::ELiminarSurtidor(){
         }
     }
     if (pos_est < 0) {
-        cout << endl << "*La estación ingresada no existe.*" << endl;
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
         return;
     }
     int contador=contador_surtidores[pos_est];
@@ -379,7 +379,7 @@ void Red::EstadoSurtidor(){
         }
     }
     if (pos_est < 0) {
-        cout << endl << "*La estación ingresada no existe.*" << endl;
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
         return;
     }
     int contador=contador_surtidores[pos_est];
@@ -423,7 +423,50 @@ void Red::EstadoSurtidor(){
         arreglo_surtidores[pos_est][var]->setEstado_surtidor(true);
         cout << "El surtidor '" << arreglo_surtidores[pos_est][var]->getNombre() << "' ha sido activado." << endl;
     } else {
-        cout << "El surtidor '" << arreglo_surtidores[pos_est][var]->getNombre() << "' ya está en el estado deseado." << endl;
+        cout << "El surtidor '" << arreglo_surtidores[pos_est][var]->getNombre() << "' ya esta en el estado deseado." << endl;
     }
+
+}
+
+void Red::ConsultarTransacciones(){
+    string estSurtidor;
+    cout<<"estaciones: "<<endl;
+    for (int i = 0; i < capacidad_est; i++) {
+        cout << endl << arreglo_estacion[i]->getNombre() << endl;
+    }
+    cout << "Ingrese el nombre de la estacion de los surtidores que quiere acceder: " << endl;
+    cin >> estSurtidor;
+    int pos_est = -1;
+    for (int i = 0; i < capacidad_est; i++) {
+        if (estSurtidor == arreglo_estacion[i]->getNombre()) {
+            pos_est = i;
+            break;
+        }
+    }
+    if (pos_est < 0) {
+        cout << endl << "*La estación ingresada no existe.*" << endl;
+        return;
+    }
+    int contador=contador_surtidores[pos_est];
+    for (int var = 0; var < contador; ++var) {
+        cout << arreglo_surtidores[pos_est][var]->getNombre() << "-" << (arreglo_surtidores[pos_est][var]->getEstado_surtidor() ? "Activa" : "Desactivo") << endl;
+    }
+    string surtidor;
+    cout<<"ingrese el surtidor que quiera ver sus transacciones:  "<<endl;
+    cin>>surtidor;
+    int var = -1;
+
+    for (int i = 0; i < contador_surtidores[pos_est]; i++) {
+        if (arreglo_surtidores[pos_est][i]->getNombre() == surtidor) {
+            var = i;
+            break;
+        }
+    }
+
+    if (var == -1) {
+        cout << "Surtidor no encontrado." << endl;
+        return;
+    }
+    arreglo_surtidores[pos_est][var]->MostrarVentas();
 
 }

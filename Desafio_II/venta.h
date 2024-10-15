@@ -18,5 +18,11 @@ public:
     Venta(short _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero);
     void calcularPrecio();
     short getID() const;
+    short getFecha() const;
+    string getHora() const;
+    int getL_vendidos() const;
+    string getMetodo_pago() const;
+    string getDoc_cliente() const;
+    int getDinero() const;
 };
 #endif // VENTA_H

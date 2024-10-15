@@ -16,7 +16,7 @@ public:
     Surtidor(string _ID_sr, string _Model_mq, bool _estado_surtidor);
     string getNombre();
     void AgregarVenta(Venta* nuevaVenta);
-
+    void MostrarVentas() const;
     bool getEstado_surtidor() const;
     void setEstado_surtidor(bool newEstado_surtidor);
 };

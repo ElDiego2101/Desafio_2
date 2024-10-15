@@ -54,6 +54,8 @@ int main() {
             TerMex.ELiminarSurtidor();
             break;
         case '6':
+            limpiarConsola();
+            TerMex.ConsultarTransacciones();
             break;
         case '7':
             limpiarConsola();
