@@ -1,5 +1,42 @@
 #include "venta.h"
 
-Venta::Venta(string _ID, string _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero)
-    : ID(_ID), fecha(_fecha), hora(_hora), L_vendidos(_L_vendidos),
-        metodo_pago(_metodo_pago), doc_cliente(_doc_cliente), dinero(_dinero) {}
+short Venta::getID() const
+{
+    return ID;
+}
+
+short Venta::getFecha() const
+{
+    return fecha;
+}
+
+string Venta::getHora() const
+{
+    return hora;
+}
+
+int Venta::getL_vendidos() const
+{
+    return L_vendidos;
+}
+
+string Venta::getMetodo_pago() const
+{
+    return metodo_pago;
+}
+
+string Venta::getDoc_cliente() const
+{
+    return doc_cliente;
+}
+
+int Venta::getDinero() const
+{
+    return dinero;
+}
+
+Venta::Venta(short _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero)
+    : fecha(_fecha), hora(_hora), L_vendidos(_L_vendidos),
+    metodo_pago(_metodo_pago), doc_cliente(_doc_cliente), dinero(_dinero) {ID=++cont_idventas;}
+
+short Venta::cont_idventas = 0;
