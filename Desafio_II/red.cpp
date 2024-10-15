@@ -13,9 +13,38 @@ Red::Red()
     arreglo_surtidores = new Surtidor**[capacidad];
     contador_surtidores = new int[capacidad];
     arreglo_ventas = new Venta*[capacidad];
+    precios = new short*[3]; // Se asigna memoria para 3 regiones
+    for (int i = 0; i < 3; ++i) {
+        precios[i] = new short[3]; // Cada región tiene 3 precios
+    }
+    precioRegular = 0;
+    precioPremiun = 0;
+    precioEcoMax = 0;
+}
+void Red::AjustarPrecios(){
+    cout << "1. Region Norte" << endl;
+    cout << "2. Region Centro" << endl;
+    cout << "3. Region Sur" << endl;
+
+    for (int var = 0; var < 3; ++var) {
+        cout << "Precios para la region " << var + 1 << endl;
+        cout << "Regular: " << endl;
+        cin >> precioRegular;
+        cout << "Premium: " << endl;
+        cin >> precioPremiun;
+        cout << "EcoMax: " << endl;
+        cin >> precioEcoMax;
+        precios[var][0] = precioRegular;  // Regular
+        precios[var][1] = precioPremiun;  // Premium
+        precios[var][2] = precioEcoMax;   // EcoMax
+    }
 }
 
 Red::~Red() {
+    for (int i = 0; i < 3; ++i) {
+        delete[] precios[i];
+    }
+    delete[] precios;
     delete[] arreglo_estacion;
     delete[] contador_surtidores;
     for (int i = 0; i < capacidad; i++) {
@@ -29,7 +58,9 @@ void Red::AgregarEstacion()
 {
     string nombre, ID, gerente, region, P_Geo;
     string hora=horaReal();
-    int tanque=randomNumero(100,200,hora);
+    int tanqueRegular=randomNumero(100,200,hora);
+    int tanquePremiun=randomNumero(100,200,hora);
+    int tanqueEcoExtra=randomNumero(100,200,hora);
     cout << "Ingrese el nombre de la nueva estacion: ";
     cin >> nombre;
     cout << "Ingrese el ID de la estacion: ";
@@ -54,7 +85,7 @@ void Red::AgregarEstacion()
     arreglo_surtidores[pos_est] = new Surtidor*[2];
     //inicializar el contador en 2 por defecto
     contador_surtidores[pos_est]=2;
-    arreglo_estacion[pos_est] = new Estacion(nombre, ID, gerente, region, P_Geo, tanque);
+    arreglo_estacion[pos_est] = new Estacion(nombre, ID, gerente, region, P_Geo, tanqueRegular,tanquePremiun,tanqueEcoExtra);
 
     cout << endl << "Estacion agregada con exito." << endl;
     cout << "Por favor ingrese dos surtidores a la estacion: " << endl;
@@ -85,7 +116,6 @@ void Red::EliminarEstacion()
     cout << endl << endl << "Ingrese la estacion a eliminar: ";
     cin >> est_elim;
 
-    // Encontrar la estación a eliminar
     for(int i = 0; i < capacidad_est; i++) {
         if(est_elim == arreglo_estacion[i]->getNombre()) {
             pos_est_elim = i;
@@ -97,14 +127,12 @@ void Red::EliminarEstacion()
         return;
     }
 
-    // Eliminar los surtidores de la estación
     int total = contador_surtidores[pos_est_elim];
     for (int var = 0; var < total; ++var) {
         delete arreglo_surtidores[pos_est_elim][var];
     }
     delete[] arreglo_surtidores[pos_est_elim];
 
-    // Crear nuevo arreglo de surtidores
     Surtidor*** nuevo_arreglo_surtidores = new Surtidor**[capacidad - 1];
     for (int i = 0; i < capacidad; i++) {
         if (i < pos_est_elim) {
@@ -116,7 +144,6 @@ void Red::EliminarEstacion()
     delete[] arreglo_surtidores;
     arreglo_surtidores = nuevo_arreglo_surtidores;
 
-    // Crear nuevo arreglo de contadores de surtidores
     int* nuevo_contador_surtidores = new int[capacidad_est - 1];
     for (int i = 0; i < pos_est_elim; i++) {
         nuevo_contador_surtidores[i] = contador_surtidores[i];
@@ -127,7 +154,6 @@ void Red::EliminarEstacion()
     delete[] contador_surtidores;
     contador_surtidores = nuevo_contador_surtidores;
 
-    // Crear nuevo arreglo de estaciones
     Estacion** nuevo_arreglo_estaciones = new Estacion*[capacidad_est - 1];
     for (int i = 0; i < capacidad_est; i++) {
         if (i < pos_est_elim) {
@@ -148,6 +174,8 @@ void Red :: consulta()
 {
     for(int i = 0; i < capacidad_est;i++){
     cout << endl << arreglo_estacion[i]->getNombre() << endl << "Surtidores: " << endl;
+    cout<<capacidad<<endl;
+    cout<<capacidad_est<<endl;
         for(int j = 0; j < contador_surtidores[i];j++){
             cout << arreglo_surtidores[i][j]->getNombre() << endl;
         }
@@ -205,10 +233,74 @@ void Red::AgregarSurtidor() {
 
     cout << endl << "*Surtidor agregado con éxito.*" << endl;
 }
+void Red::ELiminarSurtidor(){
+    string estSurtidor;
+    cout<<"estaciones: "<<endl;
+    for (int i = 0; i < capacidad_est; i++) {
+        cout << endl << arreglo_estacion[i]->getNombre() << endl;
+    }
+    cout << "Ingrese el nombre de la estación a la que quiere eliminar un surtidor: " << endl;
+    cin >> estSurtidor;
+    int pos_est = -1;
+    for (int i = 0; i < capacidad_est; i++) {
+        if (estSurtidor == arreglo_estacion[i]->getNombre()) {
+            pos_est = i;
+            break;
+        }
+    }
+    if (pos_est < 0) {
+        cout << endl << "*La estación ingresada no existe.*" << endl;
+        return;
+    }
+    int contador=contador_surtidores[pos_est];
+    for (int var = 0; var < contador; ++var) {
+        cout << arreglo_surtidores[pos_est][var]->getNombre() << "-" << (arreglo_surtidores[pos_est][var]->getEstado_surtidor() ? "Activa" : "Desactivo") << endl;
+    }
+    string surtidor;
+    cout<<"ingrese el surtidor a eliminar:  "<<endl;
+    cin>>surtidor;
+    int var = -1;
+    for (int i = 0; i < contador_surtidores[pos_est]; i++) {
+        if (arreglo_surtidores[pos_est][i]->getNombre() == surtidor) {
+            var = i;
+            break;
+        }
+    }
 
+    if (var == -1) {
+        cout << "Surtidor no encontrado." << endl;
+        return;
+    }
+    delete arreglo_surtidores[pos_est][var];
+
+    // Crear un nuevo arreglo de surtidores, excluyendo el surtidor eliminado
+    Surtidor** nuevo_arreglo_surtidores = new Surtidor*[contador - 1];
+    for (int i = 0, j = 0; i < contador; i++) {
+        if (i != var) {
+            nuevo_arreglo_surtidores[j] = arreglo_surtidores[pos_est][i];
+            j++;
+        }
+    }
+
+    // Eliminar el viejo arreglo de surtidores
+    delete[] arreglo_surtidores[pos_est];
+
+    // Actualizar el arreglo de surtidores con el nuevo
+    arreglo_surtidores[pos_est] = nuevo_arreglo_surtidores;
+
+    // Actualizar el contador de surtidores
+    contador_surtidores[pos_est]--;
+
+    cout << "*Surtidor '" << surtidor << "' eliminado con éxito.*" << endl;
+
+
+
+
+
+}
 void Red::EstadoSurtidor(){
     string estSurtidor;
-    cout<<"ingrese la estacion: "<<endl;
+    cout<<"estaciones: "<<endl;
     for (int i = 0; i < capacidad_est; i++) {
         cout << endl << arreglo_estacion[i]->getNombre() << endl;
     }

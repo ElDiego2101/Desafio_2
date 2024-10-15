@@ -4,6 +4,8 @@
 
 using namespace std;
 string horaReal();
+short leerDia(const string& nombreArchivo);
+void actualizarDia(const string& nombreArchivo, int diaActual);
 string leerInformacion(string archivo);
 string guardarInformacion();
 short randomNumero(int limite_i,int limite_s,string semilla);

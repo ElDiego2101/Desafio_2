@@ -6,15 +6,17 @@ using namespace std;
 class Venta
 {
 private:
-    string ID;
-    string fecha;
+    short ID;
+    short fecha;
     string hora;
     int L_vendidos;
     string metodo_pago;
     string doc_cliente;
     int dinero;
+    static short cont_idventas;
 public:
-    Venta(string _ID, string _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero);
+    Venta(short _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero);
+    void calcularPrecio();
+    short getID() const;
 };
-
 #endif // VENTA_H

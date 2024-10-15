@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
 #include <chrono>
 #include <ctime>
 
@@ -38,4 +37,47 @@ short randomNumero(int limite_i, int limite_s, string semilla) {
         return -1;
     }
 }
+short leerDia(const string& nombreArchivo) {
+    ifstream archivo(nombreArchivo);
+    int dia = 1;
 
+    if (archivo.is_open()) {
+        string linea;
+        getline(archivo, linea);
+        dia = stoi(linea);
+        archivo.close();
+    } else {
+        cout << "No se pudo abrir el archivo. Inicializando el día en 1." << endl;
+    }
+
+    return dia;
+}
+void actualizarDia(const string& nombreArchivo, int diaActual) {
+    ifstream archivo(nombreArchivo);
+
+    if (archivo.is_open()) {
+        string primeraLinea, restoContenido, linea;
+
+
+        getline(archivo, primeraLinea);
+
+
+        while (getline(archivo, linea)) {
+            restoContenido += linea + "\n";
+        }
+
+        archivo.close();
+
+        ofstream archivoSalida(nombreArchivo);
+        if (archivoSalida.is_open()) {
+            archivoSalida << (diaActual + 1) << endl;
+            archivoSalida << restoContenido;
+            archivoSalida.close();
+            cout << "El dia ha sido actualizado a " << diaActual + 1 << endl;
+        } else {
+            cout << "No se pudo abrir el archivo para escritura." << endl;
+        }
+    } else {
+        cout << "No se pudo abrir el archivo para lectura." << endl;
+    }
+}
