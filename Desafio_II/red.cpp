@@ -68,7 +68,7 @@ void Red::SimulacionVenta(){
     limite_s-=1;
     short indice=randomNumero(0,limite_s,hora);
     string region=arreglo_estacion[pos_est]->getRegion();
-    int tipo;
+    short tipo;
     cout<<"1.Regular"<<endl;
     cout<<"2.Premium"<<endl;
     cout<<"3.EcoExtra"<<endl;
@@ -85,12 +85,14 @@ void Red::SimulacionVenta(){
     int precio=precios[var][tipo-1];
     cout << "Ingrese la cantidad de litros de gasolina: ";
     cin >> L_vendidos;
+    L_vendidos=arreglo_estacion[pos_est]->MermarTanque(var,L_vendidos);
+    cout<<L_vendidos<<endl;
     cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
     cin >> metodo_pago;
     cout << "Ingrese el documento del cliente: ";
     cin >> doc_cliente;
     dinero=L_vendidos*precio;
-    Venta* miVenta = new Venta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero);
+    Venta* miVenta = new Venta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero,tipo);
     arreglo_surtidores[pos_est][indice]->AgregarVenta(miVenta);
     Venta** nuevo_arreglo_ventas = new Venta*[capacidad + 1];
     for (int i = 0; i < capacidad; ++i) {

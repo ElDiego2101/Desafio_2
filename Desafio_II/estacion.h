@@ -22,6 +22,13 @@ public:
     string getGerente() const;
     string getRegion() const;
     string getP_Geo() const;
+    short MermarTanque(short tipo,int litros);
+    short getTanqueRegular() const;
+    void setTanqueRegular(short newTanqueRegular);
+    short getTanquePremiun() const;
+    void setTanquePremiun(short newTanquePremiun);
+    short getTanqueEcoExtra() const;
+    void setTanqueEcoExtra(short newTanqueEcoExtra);
 };
 
 #endif // ESTACION_H
