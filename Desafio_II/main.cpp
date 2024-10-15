@@ -6,11 +6,9 @@ using namespace std;
 
 
 int main() {
-    string metodo_pago, doc_cliente,tipo;
     string nombreArchivo = "baseDatos";
     short dia = leerDia(nombreArchivo);
     string hora=horaReal();
-    int L_vendidos,dinero;
     bool ver=true;
     bool ban = true;
     char opcion;
@@ -65,23 +63,8 @@ int main() {
             break;
         case '9'://marco el ambito de esas variables
         limpiarConsola();
-        {
-            cout<<"Ingrese el tipo de combustible que desea tanquear: "<<endl;
-
-            cout << "Ingrese la cantidad de litros vendidos: ";
-            cin >> L_vendidos;
-            cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
-            cin >> metodo_pago;
-            cout << "Ingrese el documento del cliente: ";
-            cin >> doc_cliente;
-            cout << "Ingrese la cantidad de dinero recibida: ";
-            cin >> dinero;
-
-            // Crear un objeto de la clase Venta usando los datos proporcionados
-            Venta miVenta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero);
-            cout<<miVenta.getID()<<endl;
+        TerMex.SimulacionVenta();
             break;
-        }
         case 'M':
             if(ver){
                 TerMex.AjustarPrecios();
@@ -97,7 +80,8 @@ int main() {
             break;
         case 'J':
             limpiarConsola();
-           TerMex.consulta();
+            //TerMex.consulta();
+            TerMex.SimulacionVenta();
             break;
         default:
             cout<<"elija una opcion valida"<<endl;

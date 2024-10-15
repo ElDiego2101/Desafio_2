@@ -39,8 +39,72 @@ void Red::AjustarPrecios(){
         precios[var][2] = precioEcoMax;   // EcoMax
     }
 }
+void Red::SimulacionVenta(){
+    string nombreArchivo = "baseDatos";
+    string estSurtidor;
+    short dia = leerDia(nombreArchivo);
+    string metodo_pago, doc_cliente;
+    int L_vendidos,dinero;
+    for (int i = 0; i < capacidad_est; i++) {
+        cout << endl << arreglo_estacion[i]->getNombre() << endl;
+    }
+    cout<<"ingrese la estacion donde se va a realizar la venta: "<<endl;
+    cin >> estSurtidor;
 
+    int pos_est = -1;
+    for (int i = 0; i < capacidad_est; i++) {
+        if (estSurtidor == arreglo_estacion[i]->getNombre()) {
+            pos_est = i;
+            break;
+        }
+    }
+
+    if (pos_est < 0) {
+        cout << endl << "*La estación ingresada no existe.*" << endl;
+        return;
+    }
+    string hora=horaReal();
+    int limite_s=contador_surtidores[pos_est];
+    limite_s-=1;
+    short indice=randomNumero(0,limite_s,hora);
+    string region=arreglo_estacion[pos_est]->getRegion();
+    int tipo;
+    cout<<"1.Regular"<<endl;
+    cout<<"2.Premium"<<endl;
+    cout<<"3.EcoExtra"<<endl;
+    cout<<"ingrese el tipo de combustible que quiere tanquear"<<endl;
+    cin>>tipo;
+    short var;
+    if(region=="norte"){
+        var=0;
+    }else if(region=="centro"){
+        var=1;
+    }else if(region=="sur"){
+        var=2;
+    }
+    int precio=precios[var][tipo-1];
+    cout << "Ingrese la cantidad de litros de gasolina: ";
+    cin >> L_vendidos;
+    cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
+    cin >> metodo_pago;
+    cout << "Ingrese el documento del cliente: ";
+    cin >> doc_cliente;
+    dinero=L_vendidos*precio;
+    Venta* miVenta = new Venta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero);
+    arreglo_surtidores[pos_est][indice]->AgregarVenta(miVenta);
+    Venta** nuevo_arreglo_ventas = new Venta*[capacidad + 1];
+    for (int i = 0; i < capacidad; ++i) {
+        nuevo_arreglo_ventas[i] = arreglo_ventas[i];
+    }
+    nuevo_arreglo_ventas[capacidad] = miVenta;
+    arreglo_ventas = nuevo_arreglo_ventas;
+    capacidad++;
+    cout << "Venta registrada exitosamente." << endl;
+}
 Red::~Red() {
+    for (int i = 0; i < capacidad; ++i) {
+        delete arreglo_ventas[i];
+    }
     for (int i = 0; i < 3; ++i) {
         delete[] precios[i];
     }

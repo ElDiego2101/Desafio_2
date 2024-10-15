@@ -18,6 +18,7 @@ private:
     short precioRegular;
     short precioPremiun;
     short precioEcoMax;
+    friend short randomNumero(int limite_i,int limite_s,string semilla);
 
 
 public:
@@ -31,6 +32,7 @@ public:
     void ELiminarSurtidor();
     //vamos hacer que si mandamos 1 activamos y si mandamos cero desactivemos
     void EstadoSurtidor();
+    void SimulacionVenta();
 
 
 };
