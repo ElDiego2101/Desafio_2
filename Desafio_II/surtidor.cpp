@@ -1,6 +1,6 @@
 #include "surtidor.h"
 
-bool Surtidor::getEstado_surtidor() const
+    bool Surtidor::getEstado_surtidor() const
 {
     return estado_surtidor;
 }

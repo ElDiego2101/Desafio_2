@@ -1,7 +1,7 @@
 #ifndef ESTACION_H
 #define ESTACION_H
 #include <iostream>
-using namespace std;
+    using namespace std;
 
 class Estacion
 {

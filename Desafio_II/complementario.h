@@ -10,5 +10,7 @@ string leerInformacion(string archivo);
 string guardarInformacion();
 short randomNumero(int limite_i,int limite_s,string semilla);
 void limpiarConsola();
+bool esNumerico(const string& str);
+
 
 #endif // COMPLEMENTARIO_H

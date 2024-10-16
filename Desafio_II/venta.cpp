@@ -1,6 +1,6 @@
 #include "venta.h"
 
-short Venta::getID() const
+    short Venta::getID() const
 {
     return ID;
 }

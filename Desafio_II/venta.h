@@ -1,7 +1,7 @@
 #ifndef VENTA_H
 #define VENTA_H
 #include <iostream>
-using namespace std;
+    using namespace std;
 
 class Venta
 {

@@ -4,7 +4,7 @@
 #include "estacion.h"
 #include "complementario.h"
 
-Red::Red()
+    Red::Red()
 {
     capacidad = 0;
     capacidad_est = 0;
@@ -85,6 +85,7 @@ void Red::SimulacionVenta(){
     int precio=precios[var][tipo-1];
     cout << "Ingrese la cantidad de litros de gasolina: ";
     cin >> L_vendidos;
+
     L_vendidos=arreglo_estacion[pos_est]->MermarTanque(var,L_vendidos);
     cout<<L_vendidos<<endl;
     cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
@@ -239,9 +240,9 @@ void Red::EliminarEstacion()
 void Red :: consulta()
 {
     for(int i = 0; i < capacidad_est;i++){
-    cout << endl << arreglo_estacion[i]->getNombre() << endl << "Surtidores: " << endl;
-    cout<<capacidad<<endl;
-    cout<<capacidad_est<<endl;
+        cout << endl << arreglo_estacion[i]->getNombre() << endl << "Surtidores: " << endl;
+        cout<<capacidad<<endl;
+        cout<<capacidad_est<<endl;
         for(int j = 0; j < contador_surtidores[i];j++){
             cout << arreglo_surtidores[i][j]->getNombre() << endl;
         }

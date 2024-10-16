@@ -1,7 +1,8 @@
+
 #include "estacion.h"
 #include "complementario.h"
 
-string Estacion::getID_est() const
+    string Estacion::getID_est() const
 {
     return ID_est;
 }

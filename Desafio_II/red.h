@@ -4,7 +4,7 @@
 #include "venta.h"
 #include "estacion.h"
 
-class Red
+    class Red
 {
 private:
     Estacion** arreglo_estacion;
