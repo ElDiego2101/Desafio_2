@@ -35,6 +35,16 @@ int Venta::getDinero() const
     return dinero;
 }
 
+short Venta::getCont_idventas()
+{
+    return cont_idventas;
+}
+
+short Venta::getTipoCombustible() const
+{
+    return tipoCombustible;
+}
+
 Venta::Venta(short _fecha, string _hora, int _L_vendidos, string _metodo_pago, string _doc_cliente, int _dinero, short _tipoCombustible)
     : tipoCombustible(_tipoCombustible), dinero(_dinero), fecha(_fecha), hora(_hora),
     L_vendidos(_L_vendidos), metodo_pago(_metodo_pago), doc_cliente(_doc_cliente) {

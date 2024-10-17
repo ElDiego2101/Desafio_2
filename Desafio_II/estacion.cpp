@@ -53,14 +53,34 @@ void Estacion::setTanqueEcoExtra(short newTanqueEcoExtra)
     tanqueEcoExtra = newTanqueEcoExtra;
 }
 
+short Estacion::getTRegular() const
+{
+    return tRegular;
+}
+
+short Estacion::getTPremiun() const
+{
+    return tPremiun;
+}
+
+short Estacion::getTEcoExtra() const
+{
+    return tEcoExtra;
+}
+
 Estacion::Estacion(string _nombre, string _ID_est, string _gerente, string _region, string _P_Geo, short _tanqueRegular, short _tanquePremiun, short _tanqueEcoExtra)
-    : nombre(_nombre), ID_est(_ID_est), gerente(_gerente), region(_region), P_Geo(_P_Geo), tanqueRegular(_tanqueRegular),tanquePremiun(_tanquePremiun), tanqueEcoExtra(_tanqueEcoExtra){}
+    : nombre(_nombre), ID_est(_ID_est), gerente(_gerente), region(_region), P_Geo(_P_Geo), tanqueRegular(_tanqueRegular),tanquePremiun(_tanquePremiun), tanqueEcoExtra(_tanqueEcoExtra){
+    tRegular=_tanqueRegular;
+    tPremiun=_tanquePremiun;
+    tEcoExtra=_tanqueEcoExtra;
+}
 
 string Estacion :: getNombre() { return nombre; }
 
 short Estacion::MermarTanque(short tipo, int litros) {
     short indice;
     short nuevo_total;
+    cout<<tipo<<endl;
 
     if (tipo == 1) {
         indice = tanqueRegular;

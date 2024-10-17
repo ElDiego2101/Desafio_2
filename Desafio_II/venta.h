@@ -8,7 +8,7 @@ class Venta
 private:
     short ID;
     short tipoCombustible;
-    int dinero;
+    int dinero=0;
     short fecha;
     string hora;
     int L_vendidos;
@@ -25,5 +25,7 @@ public:
     string getMetodo_pago() const;
     string getDoc_cliente() const;
     int getDinero() const;
+    static short getCont_idventas();
+    short getTipoCombustible() const;
 };
 #endif // VENTA_H

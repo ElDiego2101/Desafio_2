@@ -10,6 +10,21 @@ void Surtidor::setEstado_surtidor(bool newEstado_surtidor)
     estado_surtidor = newEstado_surtidor;
 }
 
+int Surtidor::getTR() const
+{
+    return tR;
+}
+
+int Surtidor::getTP() const
+{
+    return tP;
+}
+
+int Surtidor::getTE() const
+{
+    return tE;
+}
+
 Surtidor::Surtidor(string _ID_sr, string _Model_mq, bool _estado_surtidor)
     : ID_sr(_ID_sr), Model_mq(_Model_mq), estado_surtidor(_estado_surtidor) {
     ventas = new Venta*[1];
@@ -43,4 +58,29 @@ void Surtidor::MostrarVentas()const{
         // Agrega más detalles según lo que necesites mostrar
         cout << endl;
     }
+    if(num_ventas==0){
+        cout<<"lo sentimos, este surtidor no tiene ventas"<<endl;
+    }
+}
+
+void Surtidor::ventastipoC() {
+    int totalR = 0;  // Total de combustible tipo 1 (regular)
+    int totalP = 0;  // Total de combustible tipo 2 (premium)
+    int totalE = 0;  // Total de combustible tipo 3 (extra)
+
+    for (int i = 0; i < num_ventas; ++i) {
+        short tipo = ventas[i]->getTipoCombustible();
+        if (tipo == 1) {
+            totalR += ventas[i]->getDinero();
+        } else if (tipo == 2) {
+            totalP += ventas[i]->getDinero();
+        } else if (tipo == 3) {
+            totalE += ventas[i]->getDinero();
+        }
+    }
+
+    tR=totalR;
+    tP=totalP;
+    tE=totalE;
+
 }

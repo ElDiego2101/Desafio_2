@@ -18,7 +18,7 @@ string horaReal(){
 }
 
 void limpiarConsola(){
-    for(int i=0;i<20;i++){
+    for(int i=0;i<100;i++){
         cout<<" "<<endl;
     }
 }
@@ -81,8 +81,6 @@ void actualizarDia(const string& nombreArchivo, int diaActual) {
         cout << "No se pudo abrir el archivo para lectura." << endl;
     }
 }
-
-
 bool esNumerico(const string& str) {
     for (char c : str) {
         if (!isdigit(c) && c != '.') {

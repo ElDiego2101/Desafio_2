@@ -34,6 +34,8 @@ public:
     void EstadoSurtidor();
     void SimulacionVenta();
     void ConsultarTransacciones();
+    void MontoTotalCombustible();
+    void MontoTotalVentas();
 
 
 };

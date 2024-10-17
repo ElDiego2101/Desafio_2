@@ -36,14 +36,21 @@ int main() {
 
         switch(opcion){
         case '1':
-          limpiarConsola();
-          TerMex.AgregarEstacion();
+            if(ver){
+                limpiarConsola();
+                cout<<"primero debe ajustar los precios antes de crear una estacion"<<endl;
+            }else{
+                limpiarConsola();
+                TerMex.AgregarEstacion();
+            }
             break;
         case '2':
             limpiarConsola();
             TerMex.EliminarEstacion();
             break;
         case '3':
+            limpiarConsola();
+            TerMex.MontoTotalVentas();
             break;
         case '4':
             limpiarConsola();
@@ -62,6 +69,8 @@ int main() {
             TerMex.EstadoSurtidor();
             break;
         case '8':
+            limpiarConsola();
+            TerMex.MontoTotalCombustible();
             break;
         case '9'://marco el ambito de esas variables
         limpiarConsola();
@@ -69,9 +78,11 @@ int main() {
             break;
         case 'M':
             if(ver){
+                limpiarConsola();
                 TerMex.AjustarPrecios();
                 ver=false;
             }else{
+                limpiarConsola();
                 cout<<"lo sentimos, espera al siguiente dia para ajustar los precios"<<endl;
             }
             break;

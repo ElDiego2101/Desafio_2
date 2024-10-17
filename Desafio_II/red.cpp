@@ -38,88 +38,11 @@ void Red::AjustarPrecios(){
         precios[var][1] = precioPremiun;  // Premium
         precios[var][2] = precioEcoMax;   // EcoMax
     }
-}
-void Red::SimulacionVenta(){
-    string nombreArchivo = "baseDatos";
-    string estSurtidor;
-    short dia = leerDia(nombreArchivo);
-    string metodo_pago, doc_cliente;
-    int L_vendidos,dinero;
-    for (int i = 0; i < capacidad_est; i++) {
-        cout << endl << arreglo_estacion[i]->getNombre() << endl;
-    }
-    cout<<"ingrese la estacion donde se va a realizar la venta: "<<endl;
-    cin >> estSurtidor;
+    limpiarConsola();
+    cout<<"precios regulados con exito"<<endl;
 
-    int pos_est = -1;
-    for (int i = 0; i < capacidad_est; i++) {
-        if (estSurtidor == arreglo_estacion[i]->getNombre()) {
-            pos_est = i;
-            break;
-        }
-    }
-
-    if (pos_est < 0) {
-        cout << endl << "*La estacion ingresada no existe.*" << endl;
-        return;
-    }
-    string hora=horaReal();
-    int limite_s=contador_surtidores[pos_est];
-    limite_s-=1;
-    short indice=randomNumero(0,limite_s,hora);
-    string region=arreglo_estacion[pos_est]->getRegion();
-    short tipo;
-    cout<<"1.Regular"<<endl;
-    cout<<"2.Premium"<<endl;
-    cout<<"3.EcoExtra"<<endl;
-    cout<<"ingrese el tipo de combustible que quiere tanquear"<<endl;
-    cin>>tipo;
-    short var;
-    if(region=="norte"){
-        var=0;
-    }else if(region=="centro"){
-        var=1;
-    }else if(region=="sur"){
-        var=2;
-    }
-    int precio=precios[var][tipo-1];
-    cout << "Ingrese la cantidad de litros de gasolina: ";
-    cin >> L_vendidos;
-
-    L_vendidos=arreglo_estacion[pos_est]->MermarTanque(var,L_vendidos);
-    cout<<L_vendidos<<endl;
-    cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
-    cin >> metodo_pago;
-    cout << "Ingrese el documento del cliente: ";
-    cin >> doc_cliente;
-    dinero=L_vendidos*precio;
-    Venta* miVenta = new Venta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero,tipo);
-    arreglo_surtidores[pos_est][indice]->AgregarVenta(miVenta);
-    Venta** nuevo_arreglo_ventas = new Venta*[capacidad + 1];
-    for (int i = 0; i < capacidad; ++i) {
-        nuevo_arreglo_ventas[i] = arreglo_ventas[i];
-    }
-    nuevo_arreglo_ventas[capacidad] = miVenta;
-    arreglo_ventas = nuevo_arreglo_ventas;
-    capacidad++;
-    cout << "Venta registrada exitosamente." << endl;
 }
-Red::~Red() {
-    for (int i = 0; i < capacidad; ++i) {
-        delete arreglo_ventas[i];
-    }
-    for (int i = 0; i < 3; ++i) {
-        delete[] precios[i];
-    }
-    delete[] precios;
-    delete[] arreglo_estacion;
-    delete[] contador_surtidores;
-    for (int i = 0; i < capacidad; i++) {
-        delete[] arreglo_surtidores[i];
-    }
-    delete[] arreglo_surtidores;
-    delete[] arreglo_ventas;
-}
+
 
 void Red::AgregarEstacion()
 {
@@ -134,7 +57,7 @@ void Red::AgregarEstacion()
     cin >> ID;
     cout << "Ingrese el gerente de la estacion: ";
     cin >> gerente;
-    cout << "Ingrese la region en la que se encuentra la estacion (norte, centro, sur): ";
+    cout << "Ingrese la region (norte, centro, sur): ";
     cin >> region;
     cout << "Ingrese la ubicacion geografica (coordenadas GPS): ";
     cin >> P_Geo;
@@ -154,6 +77,7 @@ void Red::AgregarEstacion()
     contador_surtidores[pos_est]=2;
     arreglo_estacion[pos_est] = new Estacion(nombre, ID, gerente, region, P_Geo, tanqueRegular,tanquePremiun,tanqueEcoExtra);
 
+    limpiarConsola();
     cout << endl << "Estacion agregada con exito." << endl;
     cout << "Por favor ingrese dos surtidores a la estacion: " << endl;
     for(int i = 0;i<2;i++){
@@ -162,10 +86,10 @@ void Red::AgregarEstacion()
         cout << "Ingrese el modelo del surtidor: ";
         cin >> nombre;
         nuevo_arreglo_surtidores[pos_est][i] = new Surtidor(ID, nombre, true);
+        limpiarConsola();
         cout << endl << "*Surtidor creado con exito*" << endl;
     }
     arreglo_surtidores = nuevo_arreglo_surtidores;
-    cout<<*arreglo_surtidores[1];
     pos_est++;
     capacidad_est++;
     capacidad++;
@@ -234,6 +158,8 @@ void Red::EliminarEstacion()
 
     capacidad_est--;
     capacidad--;
+    limpiarConsola();
+    cout<<"estacion eliminada con exito"<<endl;
 }
 
 
@@ -255,8 +181,9 @@ void Red::AgregarSurtidor() {
     string nombre_a;
     string estSurtidor;
 
+    cout<<"Estaciones: "<<endl;
     for (int i = 0; i < capacidad_est; i++) {
-        cout << endl << arreglo_estacion[i]->getNombre() << endl;
+        cout <<"-"<< arreglo_estacion[i]->getNombre() << endl;
     }
 
     cout << "Ingrese el nombre de la estacion a la que quiere agregar un surtidor: " << endl;
@@ -298,7 +225,8 @@ void Red::AgregarSurtidor() {
     contador_surtidores[pos_est] += 1;
     capacidad++;
 
-    cout << endl << "*Surtidor agregado con éxito.*" << endl;
+    limpiarConsola();
+    cout << endl << "*Surtidor agregado con exito.*" << endl;
 }
 void Red::ELiminarSurtidor(){
     string estSurtidor;
@@ -320,6 +248,10 @@ void Red::ELiminarSurtidor(){
         return;
     }
     int contador=contador_surtidores[pos_est];
+    if(contador==2){
+        cout<<"lo sentimos, no puedes eliminar un surtidor porque la estacion debe de tener minimo dos surtidores"<<endl;
+        return;
+    }
     for (int var = 0; var < contador; ++var) {
         cout << arreglo_surtidores[pos_est][var]->getNombre() << "-" << (arreglo_surtidores[pos_est][var]->getEstado_surtidor() ? "Activa" : "Desactivo") << endl;
     }
@@ -358,7 +290,8 @@ void Red::ELiminarSurtidor(){
     // Actualizar el contador de surtidores
     contador_surtidores[pos_est]--;
 
-    cout << "*Surtidor '" << surtidor << "' eliminado con éxito.*" << endl;
+    limpiarConsola();
+    cout << "*Surtidor '" << surtidor << "' eliminado con exito.*" << endl;
 
 
 
@@ -372,7 +305,7 @@ void Red::EstadoSurtidor(){
         cout << endl << arreglo_estacion[i]->getNombre() << endl;
     }
 
-    cout << "Ingrese el nombre de la estación a la que quiere agregar un surtidor: " << endl;
+    cout << "Ingrese el nombre de la estación a la que quiere modificar un surtidor: " << endl;
     cin >> estSurtidor;
     int pos_est = -1;
     for (int i = 0; i < capacidad_est; i++) {
@@ -418,6 +351,7 @@ void Red::EstadoSurtidor(){
         estado=0;
         break;
     }
+    limpiarConsola();
 
     if (estado == 0 && arreglo_surtidores[pos_est][var]->getEstado_surtidor() == 1) {
         arreglo_surtidores[pos_est][var]->setEstado_surtidor(false);
@@ -472,4 +406,150 @@ void Red::ConsultarTransacciones(){
     }
     arreglo_surtidores[pos_est][var]->MostrarVentas();
 
+}
+void Red::SimulacionVenta(){
+    string nombreArchivo = "baseDatos";
+    string estSurtidor;
+    short dia = leerDia(nombreArchivo);
+    string metodo_pago, doc_cliente;
+    int L_vendidos,dinero;
+    for (int i = 0; i < capacidad_est; i++) {
+        cout << endl << arreglo_estacion[i]->getNombre() << endl;
+    }
+    cout<<"ingrese la estacion donde se va a realizar la venta: "<<endl;
+    cin >> estSurtidor;
+
+    int pos_est = -1;
+    for (int i = 0; i < capacidad_est; i++) {
+        if (estSurtidor == arreglo_estacion[i]->getNombre()) {
+            pos_est = i;
+            break;
+        }
+    }
+
+    if (pos_est < 0) {
+        cout << endl << "*La estacion ingresada no existe.*" << endl;
+        return;
+    }
+    string hora=horaReal();
+    int limite_s=contador_surtidores[pos_est];
+    limite_s-=1;
+    short indice=randomNumero(0,limite_s,hora);
+    string region=arreglo_estacion[pos_est]->getRegion();
+    short tipo;
+    cout<<"1.Regular"<<endl;
+    cout<<"2.Premium"<<endl;
+    cout<<"3.EcoExtra"<<endl;
+    cout<<"ingrese el tipo de combustible que quiere tanquear"<<endl;
+    cin>>tipo;
+    short var;
+    if(region=="norte"){
+        var=1;
+    }else if(region=="centro"){
+        var=2;
+    }else if(region=="sur"){
+        var=3;
+    }
+    int precio=precios[var][tipo-1];
+    cout << "Ingrese la cantidad de litros de gasolina: ";
+    L_vendidos=arreglo_estacion[pos_est]->MermarTanque(var,L_vendidos);
+    cout << "Ingrese el metodo de pago (Efectivo/Tarjeta): ";
+    cin >> metodo_pago;
+    cout << "Ingrese el documento del cliente: ";
+    cin >> doc_cliente;
+    dinero=L_vendidos*precio;
+    Venta* miVenta = new Venta(dia, hora, L_vendidos, metodo_pago, doc_cliente, dinero,tipo);
+    arreglo_surtidores[pos_est][indice]->AgregarVenta(miVenta);
+    arreglo_surtidores[pos_est][indice]->ventastipoC();
+    Venta** nuevo_arreglo_ventas = new Venta*[capacidad + 1];
+    for (int i = 0; i < capacidad; ++i) {
+        nuevo_arreglo_ventas[i] = arreglo_ventas[i];
+    }
+    nuevo_arreglo_ventas[capacidad] = miVenta;
+    arreglo_ventas = nuevo_arreglo_ventas;
+    capacidad++;
+    limpiarConsola();
+    cout << "Venta registrada exitosamente." << endl;
+}
+
+
+void Red::MontoTotalCombustible(){
+    short contadorTotalR;
+    short contadorTotalP;
+    short contadorTotalE;
+    short total;
+    short disponible;
+    short vendido;
+    cout<<"1.Regular"<<endl;
+    for (int var = 0; var < capacidad_est; ++var) {
+        disponible=arreglo_estacion[var]->getTanqueRegular();
+        total=arreglo_estacion[var]->getTRegular();
+        vendido=total-disponible;
+        cout<<"la estacion: "<<arreglo_estacion[var]->getNombre()<<" vendio "<<vendido<<" litros de regular"<<endl;
+        contadorTotalR+=vendido;
+    }
+    cout<<""<<endl;
+    cout<<"el total de litros de regular son: "<<contadorTotalR<<endl;
+
+    cout<<"2.Premium"<<endl;
+    for (int var = 0; var < capacidad_est; ++var) {
+        disponible=arreglo_estacion[var]->getTanquePremiun();
+        total=arreglo_estacion[var]->getTanquePremiun();
+        vendido=total-disponible;
+        cout<<"la estacion: "<<arreglo_estacion[var]->getNombre()<<" vendio "<<vendido<<" litros de premium"<<endl;
+        contadorTotalP+=vendido;
+    }
+    cout<<""<<endl;
+    cout<<"el total de litros de premium son: "<<contadorTotalP<<endl;
+
+
+    cout<<"3.EcoExtra"<<endl;
+    for (int var = 0; var < capacidad_est; ++var) {
+        disponible=arreglo_estacion[var]->getTanqueEcoExtra();
+        total=arreglo_estacion[var]->getTanqueEcoExtra();
+        vendido=total-disponible;
+        cout<<"la estacion: "<<arreglo_estacion[var]->getNombre()<<" vendio "<<vendido<<" litros de EcoExtra"<<endl;
+        contadorTotalE+=vendido;
+    }
+    cout<<""<<endl;
+    cout<<"el total de litros de EcoExtra son: "<<contadorTotalE<<endl;
+}
+
+void Red::MontoTotalVentas(){
+    short contador;
+    int totalR=0;
+    int totalP=0;
+    int totalE=0;
+    for (int var = 0; var <capacidad_est ; ++var) {
+        contador=contador_surtidores[var];
+        for (int j = 0; j < contador; ++j) {
+            totalR=arreglo_surtidores[var][j]->getTR();
+            totalP=arreglo_surtidores[var][j]->getTP();
+            totalE=arreglo_surtidores[var][j]->getTE();
+        }
+    }
+    cout<<"el total de ventas de cada combustible es: "<<endl;
+    cout<<"regular: "<<endl;
+    cout<<totalR<<endl;
+    cout<<"premium"<<endl;
+    cout<<totalP<<endl;
+    cout<<"EcoExtra"<<endl;
+    cout<<totalE<<endl;
+
+}
+Red::~Red() {
+    for (int i = 0; i < capacidad; ++i) {
+        delete arreglo_ventas[i];
+    }
+    for (int i = 0; i < 3; ++i) {
+        delete[] precios[i];
+    }
+    delete[] precios;
+    delete[] arreglo_estacion;
+    delete[] contador_surtidores;
+    for (int i = 0; i < capacidad; i++) {
+        delete[] arreglo_surtidores[i];
+    }
+    delete[] arreglo_surtidores;
+    delete[] arreglo_ventas;
 }

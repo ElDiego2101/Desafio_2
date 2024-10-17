@@ -14,6 +14,9 @@ private:
     short tanqueRegular;
     short tanquePremiun;
     short tanqueEcoExtra;
+    short tRegular;
+    short tPremiun;
+    short tEcoExtra;
 
 public:
     Estacion(string _nombre, string _ID_est, string _gerente, string _region, string _P_Geo, short _tanqueRegular,short _tanquePremiun,short _tanqueEcoExtra);
@@ -29,6 +32,9 @@ public:
     void setTanquePremiun(short newTanquePremiun);
     short getTanqueEcoExtra() const;
     void setTanqueEcoExtra(short newTanqueEcoExtra);
+    short getTRegular() const;
+    short getTPremiun() const;
+    short getTEcoExtra() const;
 };
 
 #endif // ESTACION_H
