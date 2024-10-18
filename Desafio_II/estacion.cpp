@@ -78,39 +78,33 @@ Estacion::Estacion(string _nombre, string _ID_est, string _gerente, string _regi
 string Estacion :: getNombre() { return nombre; }
 
 short Estacion::MermarTanque(short tipo, int litros) {
-    short indice;
-    short nuevo_total;
-    cout<<tipo<<endl;
-
-    if (tipo == 1) {
-        indice = tanqueRegular;
-    } else if (tipo == 2) {
-        indice = tanquePremiun;
-    } else if (tipo == 3) {
-        indice = tanqueEcoExtra;
-    } else {
+    short* tanque;
+    switch(tipo) {
+    case 0:
+        tanque = &tanqueRegular;
+        break;
+    case 1:
+        tanque = &tanquePremiun;
+        break;
+    case 2:
+        tanque = &tanqueEcoExtra;
+        break;
+    default:
         cout << "Tipo de combustible no válido." << endl;
         return 0;
     }
 
-    nuevo_total = indice - litros;
-
-    if (nuevo_total < 0) {
-        cout << "Solo podemos venderle " << indice << " litros" << endl;
-        litros = indice;
-        nuevo_total = 0;
-    }
-
-    if (tipo == 1) {
-        tanqueRegular = nuevo_total;
-    } else if (tipo == 2) {
-        tanquePremiun = nuevo_total;
-    } else if (tipo == 3) {
-        tanqueEcoExtra = nuevo_total;
-    }
-
-    if (litros == 0) {
+    if (*tanque == 0) {
         cout << "Lo sentimos, no tenemos combustible de este tipo." << endl;
+        return 0;
+    }
+
+    if (*tanque < litros) {
+        cout << "Solo podemos venderle " << *tanque << " litros." << endl;
+        litros = *tanque;
+        *tanque = 0;
+    } else {
+        *tanque -= litros;
     }
 
     return litros;

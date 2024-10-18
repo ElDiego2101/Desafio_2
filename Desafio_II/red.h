@@ -9,7 +9,6 @@
 private:
     Estacion** arreglo_estacion;
     Surtidor*** arreglo_surtidores;
-    Venta** arreglo_ventas;
     short** precios;
     int* contador_surtidores;
     int pos_est;
@@ -36,6 +35,7 @@ public:
     void ConsultarTransacciones();
     void MontoTotalCombustible();
     void MontoTotalVentas();
+    void GuardarVentas(const string& nombreArchivo);
 
 
 };

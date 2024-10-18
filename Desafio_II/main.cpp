@@ -36,13 +36,9 @@ int main() {
 
         switch(opcion){
         case '1':
-            if(ver){
-                limpiarConsola();
-                cout<<"primero debe ajustar los precios antes de crear una estacion"<<endl;
-            }else{
+
                 limpiarConsola();
                 TerMex.AgregarEstacion();
-            }
             break;
         case '2':
             limpiarConsola();
@@ -73,8 +69,13 @@ int main() {
             TerMex.MontoTotalCombustible();
             break;
         case '9'://marco el ambito de esas variables
-        limpiarConsola();
-        TerMex.SimulacionVenta();
+            if(ver){
+                limpiarConsola();
+                cout<<"Primero debe ajustar los precios antes de crear una estacion"<<endl;
+            }else{
+                limpiarConsola();
+                TerMex.SimulacionVenta();
+            }
             break;
         case 'M':
             if(ver){
@@ -83,11 +84,11 @@ int main() {
                 ver=false;
             }else{
                 limpiarConsola();
-                cout<<"lo sentimos, espera al siguiente dia para ajustar los precios"<<endl;
+                cout<<"Lo sentimos, espera al siguiente dia para ajustar los precios"<<endl;
             }
             break;
         case 'N':
-
+            limpiarConsola();
             actualizarDia(nombreArchivo, dia);
             ban=false;
             break;
@@ -97,7 +98,7 @@ int main() {
             TerMex.SimulacionVenta();
             break;
         default:
-            cout<<"elija una opcion valida"<<endl;
+            cout<<"Elija una opcion valida"<<endl;
 
 
         }
