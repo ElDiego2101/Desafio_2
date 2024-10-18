@@ -7,3 +7,9 @@ Pasos a seguir:
 *Main
 *Headers
 *Clases
+
+
+
+Documento
+[Informe Desafio 2.docx](https://github.com/user-attachments/files/17428665/Informe.Desafio.2.docx)
+
