@@ -13,3 +13,6 @@ Pasos a seguir:
 Documento
 [Informe Desafio 2.docx](https://github.com/user-attachments/files/17428665/Informe.Desafio.2.docx)
 
+link del video: 
+https://youtu.be/onrvYH3zb6g
+
